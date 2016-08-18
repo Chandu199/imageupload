@@ -5,10 +5,10 @@ class PicsController < ApplicationController
         @pics = Pic.all.order("created_at DESC")
     end
     def new
-        @pic  = Pic.new
+        @pic  = current_user.pics.build
     end
     def create
-        @pic  = Pic.new(pic_params)
+        @pic  = current_user.pics.build(pic_params)
         if @pic.save
             redirect_to @pic, notice: 'Your Pictures is saved'
         else
@@ -41,5 +41,8 @@ class PicsController < ApplicationController
     end
     def find_pic
         @pic = Pic.find(params[:id])
+    end
+    def find_user
+        @user = user.find_by(params[:user_id])
     end
 end
